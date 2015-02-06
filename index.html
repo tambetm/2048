@@ -82,15 +82,15 @@
     </p>
     <hr>
     <p>
-    Average score shows average of last 100 games. Initially the agent is making completely random moves ("exploration epsilon" is 1) and expected average score is around 1100. As the learning progresses, random exploration rate decreases and the agent starts using its network more and more. This should improve average score, but currently it doesn't. Quite the opposite, average score decreases instead! Any suggestions are welcome, have a look in <a href="https://github.com/tambetm/2048/blob/gh-pages/js/application.js">application.js</a>.
+    Average score shows the average of last 100 games. Initially the agent is making completely random moves ("exploration epsilon" is 1) and expected average score is around 1100. As the learning progresses, random exploration rate decreases and the agent starts using its network more and more. This should improve average score, but currently it doesn't. Quite the opposite, average score decreases instead! To help me to figure it out, take a look in <a href="https://github.com/tambetm/2048/blob/gh-pages/js/application.js">application.js</a>.
     </p>
     <hr>
     <p>
-    You can refresh the page any time, learning continues from the point it left off. The state is saved to browser's local storage after each game, so better refresh after a game has just finished. Refresh clears experience replay memory, because it was too big to fit to browser's local storage. That's why after refresh it plays very fast, until "experience replay size" achieves 1000. Then it resumes learning, which also makes moves somewhat slower. Learning progress can be observed from "average Q-learning loss", which should decrease in time. "age" shows the total number of training passes the network has seen.
+    You can refresh the page any time, learning continues from the point it left off. The network state is saved to browser's local storage after each game, so the best time to refresh is after a game has just finished. Refresh also clears experience replay memory, because it was too big to fit to browser's local storage. That's why after refresh it plays very fast, until "experience replay size" achieves 1000. Then it resumes learning, which also makes moves somewhat slower. Learning progress can be observed from "average Q-learning loss", which should decrease in time. "age" shows the total number of training passes the network has seen.
     </p>
     <hr>
     <p>
-    If you want to restart learning from scratch, press the <strong>Reset</strong> button. Reset also clears average score and best score. You can also pause the game temporarily with <strong>Pause</strong> button, if the browser eats up all your computer resources, or if you want to explore the state of the network, or if you just want to give the AI little hand by merging few tiles yourself :). <strong>Resume</strong> continues learning again.
+    If you want to restart learning from scratch, press the <strong>Reset</strong> button. Reset also clears the average score and the best score. You can also pause the game temporarily with <strong>Pause</strong> button, if the browser eats up all your computer resources, or if you want to explore the state of the network, or if you just want to give the AI little hand by merging few tiles yourself :). <strong>Resume</strong> continues learning again.
     </p>
     <hr>
     <p>
