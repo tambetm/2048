@@ -10,16 +10,28 @@ window.requestAnimationFrame(function () {
 
   // create a brain with the following hyperparameters
   var opt = {
-    temporal_window: 0,
-    experience_size: 30000,
-    start_learn_threshold: 1000,
-    gamma: 0.8,
-    learning_steps_total: 100000,
-    learning_steps_burnin: 3000,
-    epsilon_min: 0.05,
-    epsilon_test_time: 0.01,
-    hidden_layer_sizes: [100],
-    tdtrainer_options: {learning_rate: 0.0001, momentum: 0.5, batch_size: 128, l2_decay: 0.01}
+    temporal_window: 0,           // how many previous game states to use as input to the network, we use only current
+    experience_size: 30000,       // how many state transitions to store in experience replay memory
+    start_learn_threshold: 1000,  // how many transitions are needed in experience replay memory before starting learning
+    gamma: 0.8,                   // future reward discount rate in Q-learning
+    learning_steps_burnin: 3000,  // how many steps make only random moves (keep epsilon = 1) 
+    learning_steps_total: 100000, // then start decreasing epsilon from 1 to epsilon_min
+    epsilon_min: 0.05,            // value of exploration rate after learning_steps_total steps
+    epsilon_test_time: 0.01,      // exploration rate value when learning = false (not in use)
+    layer_defs: [                 // network structure
+      {type:'input', out_sx:1, out_sy:1, out_depth:16},
+      {type:'fc', num_neurons: 50, activation:'relu'},
+      {type:'fc', num_neurons: 50, activation:'relu'},
+      {type:'regression', num_neurons:4}
+      // for full documentation on layers see http://cs.stanford.edu/people/karpathy/convnetjs/docs.html
+    ],
+    tdtrainer_options: {
+      method: 'adadelta',         // options: adadelta, adagrad or sgd, for overview see http://arxiv.org/abs/1212.5701
+      learning_rate: 0.01,        // learning rate for all layers - the biggest 10^-n value that didn't blow up loss
+      momentum: 0,                // momentum for all layers - suggested default for adadelta
+      batch_size: 100,            // SGD minibatch size - average game session size?
+      l2_decay: 0.001             // L2 regularization - suggested default
+    }
   };
   brain = new deepqlearn.Brain(16, 4, opt); // 16 inputs, 4 possible outputs (0,1,2,3)
 
