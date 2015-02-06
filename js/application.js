@@ -61,11 +61,11 @@ window.requestAnimationFrame(function () {
   reset_button.addEventListener("click", function() {
     // stop player
     clearTimeout(ticker);
-    // clear local storage
+    // clear local storage and average score
     game.storageManager.clearBrainState();
     game.storageManager.clearLastScores();
-    average_container.textContent = 0;
     game.storageManager.setBestScore(0);
+    average_container.textContent = 0;
     // create a new brain with the same options
     brain = new deepqlearn.Brain(16, 4, opt);
     brain.visSelf(info);
@@ -79,11 +79,12 @@ window.requestAnimationFrame(function () {
   ticker = setTimeout(tick, 0);
 });
 
+// the main loop
 function tick() {
   if (game.isGameTerminated())
   {
     console.log(game.score);
-    // collect last scores
+    // collect last scores and update average
     var scores_window = new cnnutil.Window(100, 1);
     var last_scores = game.storageManager.getLastScores();
     if (last_scores != null) {
@@ -100,6 +101,7 @@ function tick() {
     game.restart();
   }
   else {
+    // create game state as a simple array
     var state = [];
     for (i = 0; i < 4; i++) {
       for (j = 0; j < 4; j++) {
